@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handy Helper Dashboard</title>
+</head>
+<body>
+    <h1>Hello {{current_user.first_name}}!</h1>
+    <a href="/logout"><button>Logout</button></a>
+    <a href="/jobs/new"><button>New Job</button></a>
+
+    <div>
+        <h3>Everyone's jobs</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% for one_job in all_jobs %}
+                <tbody>
+                    {% if current_user not in one_job.added_by.all %}
+                    <tr>
+                        <td>{{one_job.title}}</td>
+                        <td>{{one_job.location}}</td>
+                        <div>
+                            {% if current_user.id == one_job.creator.id %}
+                            <td><a href="/jobs/{{one_job.id}}">View</a> | <a href="/jobs/{{one_job.id}}/delete">Remove</a> | <a href="/jobs/{{one_job.id}}/edit">Edit</a> | <a href="/addjob/{{one_job.id}}" role="button">Add</a> </td>
+                            {% else %}
+                            <td><a href="/jobs/{{one_job.id}}">View</a> | <a href="/addjob/{{one_job.id}}" role="button">Add</a> </td>
+                            {% endif %}
+                    </div>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+        <h3>{{current_user.first_name}}'s jobs</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                {% for one_job in all_jobs %}
+                <tbody>
+                    {% if current_user in one_job.added_by.all %}
+                    <tr>
+                        <td>{{one_job.title}}</td>
+                        <td><a href="/jobs/{{one_job.id}}">View</a> | <a href="/jobs/{{one_job.id}}/delete">Done</a> | <a href="removejob/{{one_job.id}}" role="button">Give up</a> </td>
+                        
+                    </tr>
+                    {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+    </div>
+</body>
+</html>

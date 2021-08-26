@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View job</title>
+</head>
+<body>
+    <h1>Hello {{current_user.first_name}}! These are the job details!</h1>
+    <a href="/dashboard"><button>Dashboard</button></a>
+    <a href="/logout"><button>Logout</button></a>
+    <div>
+        <h3>{{one_job.title}}</h3>
+        <div>
+            <p>{{one_job.description}}</p>
+            <p>Location: {{one_job.location}}</p>
+            <p>Posted by: {{one_job.creator.first_name}}</p>
+            <p>Posted on: {{one_job.created_at}}</p>
+        </div>
+        <a href="/addjob/{{one_job.id}}" role="button">Add to my jobs</a>
+    </div>
+</body>
+</html>
